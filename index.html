@@ -80,6 +80,20 @@
     <!-- PROJECTS -->
     <section id="projects">
       <h2>Projects</h2>
+      <div class="card">
+        <h3>Latprobe</h3>
+        <div class="meta">Python &middot; Linux &middot; low-latency diagnostics &middot; MIT</div>
+        <p>
+          Symptom-driven Linux latency and jitter diagnostics for low-latency
+          workloads. Instead of making you remember which tool shows what,
+          Latprobe runs the kernel-level checks you would type by hand
+          (cpupower, ethtool -S, /proc/net/softnet_stat, numastat, and more)
+          across 42 checks in 9 profiles, and interprets each result as
+          OK / WARN / FAIL with the raw evidence, why it matters, and a concrete
+          fix. Runs on any Linux instance; safe to run from cron except the one
+          disruptive cyclictest probe.
+        </p>
+      </div>
       <a class="card" href="articles/hft-aws-bare-metal.html">
         <h3>HFT-style low-latency stack on AWS bare metal</h3>
         <div class="meta">Linux &middot; DPDK &middot; AWS EC2 metal &middot; performance tuning</div>
