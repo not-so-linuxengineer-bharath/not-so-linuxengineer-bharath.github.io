@@ -4,138 +4,186 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bharath M. | Cloud &amp; Low-Latency Systems</title>
-  <meta name="description" content="Bharath M., engineer working on AWS, Linux performance, and low-latency systems." />
+  <meta name="description" content="Bharath M. — I chase tail latency on Linux. Cloud infrastructure, kernel tuning, DPDK, and the parts of the stack most people treat as a black box." />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header class="site">
     <div class="wrap">
-      <span class="brand">Bharath M.</span>
+      <span class="brand">bharath<span class="accent">@</span>not-so-linuxengineer</span>
       <nav>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#writing">Writing</a>
-        <a href="#contact">Contact</a>
+        <a href="#about">about</a>
+        <a href="#skills">skills</a>
+        <a href="#projects">projects</a>
+        <a href="#writing">writing</a>
+        <a href="#contact">contact</a>
       </nav>
     </div>
   </header>
 
   <main class="wrap">
-    <!-- HERO -->
+    <!-- HERO: terminal -->
     <section class="hero" style="border-top:none;">
-      <div class="eyebrow">Cloud &middot; Linux &middot; Low Latency</div>
-      <h1>I make systems fast and predictable.</h1>
-      <p class="lead">
-        I work at the intersection of AWS, the Linux kernel, and performance
-        engineering, from troubleshooting production systems to squeezing
-        microseconds out of bare-metal hosts.
-      </p>
-      <div class="cta">
-        <a class="btn primary" href="articles/hft-aws-bare-metal.html">Read: HFT low latency on AWS &rarr;</a>
-        <a class="btn" href="#contact">Get in touch</a>
+      <div class="terminal">
+        <div class="titlebar">
+          <span class="dot red"></span><span class="dot amber"></span><span class="dot green"></span>
+          <span class="tt">bharath@not-so-linuxengineer: ~</span>
+        </div>
+        <div class="body">
+          <div class="line">
+            <span class="prompt">$</span>
+            <span class="cmd" id="typed" data-text="whoami --what-i-actually-do"></span><span class="cursor"></span>
+          </div>
+          <div id="after-type" style="opacity:0;">
+            <div class="neofetch">
+<pre class="logo">   _._._._._._._.
+  |  .-------.  |
+  | |  &gt;_     | |
+  | |        | |
+  |  '-------'  |
+  '--[ tux'd ]--'</pre>
+              <div class="info">
+                <div class="row"><span class="k">role</span>      : cloud &amp; low-latency systems engineer</div>
+                <div class="row"><span class="k">focus</span>     : tail latency, kernel tuning, kernel bypass</div>
+                <div class="row"><span class="k">os</span>        : Linux (Amazon Linux, RHEL, Ubuntu)</div>
+                <div class="row"><span class="k">langs</span>     : Bash, Python, C</div>
+                <div class="row"><span class="k">stack</span>     : AWS, EC2 bare metal, DPDK, NUMA, perf</div>
+                <div class="row"><span class="k">motto</span>     : averages lie; the p99.9 is where the money is</div>
+              </div>
+            </div>
+            <div class="cta">
+              <a class="btn primary" href="articles/hft-aws-bare-metal.html">read: 138&micro;s &rarr; 7&micro;s on AWS metal</a>
+              <a class="btn" href="#contact">get in touch</a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- ABOUT -->
-    <section id="about">
-      <h2>About me</h2>
+    <section id="about" class="reveal">
+      <h2>about</h2>
       <p>
-        I&rsquo;m Bharath, an engineer working in cloud infrastructure and
-        low-latency Linux systems. I spend most of my time deep in AWS and the
-        Linux kernel, working on CPU power management, NUMA, kernel bypass, and
-        the network data path. These are the parts of the stack most people
-        treat as a black box.
+        I&rsquo;m Bharath. I spend my time in the unglamorous middle of the stack,
+        where the kernel meets the hardware: CPU power states, NUMA, IRQ
+        affinity, the network data path. The bugs down here rarely show up as
+        errors. They show up as a graph that&rsquo;s fine on average and
+        occasionally, expensively, isn&rsquo;t.
       </p>
       <p>
-        What I enjoy most is turning &ldquo;it&rsquo;s slow sometimes&rdquo; into
-        a measured, reproducible answer. I like building things end to end:
-        forming a hypothesis, instrumenting the system, gathering the evidence,
-        and only then drawing a conclusion, then writing it up so someone else
-        can reproduce it.
+        My favourite kind of work is turning &ldquo;it&rsquo;s slow sometimes&rdquo;
+        into a number, a cause, and a fix you can reproduce. Form a hypothesis,
+        instrument the box, read the evidence, and only then say what&rsquo;s
+        happening. Then write it down so the next person doesn&rsquo;t have to
+        rediscover it.
       </p>
       <p class="muted">
-        Outside of the day job I tinker with bare-metal performance, DPDK, and
-        whatever rabbit hole looks interesting that week. When I learn something
-        worth sharing, it ends up here.
+        The handle is a joke, mostly. I like Linux more than is strictly healthy.
       </p>
     </section>
 
     <!-- SKILLS -->
-    <section id="skills">
-      <h2>What I work with</h2>
+    <section id="skills" class="reveal">
+      <h2>skills</h2>
       <div class="tags">
-        <span class="tag">AWS</span>
         <span class="tag">Linux performance</span>
-        <span class="tag">Low-latency tuning</span>
-        <span class="tag">DPDK</span>
-        <span class="tag">Networking</span>
-        <span class="tag">NUMA / CPU isolation</span>
-        <span class="tag">Bash / Python</span>
-        <span class="tag">EC2 / bare metal</span>
-        <span class="tag">Troubleshooting</span>
+        <span class="tag">low-latency tuning</span>
+        <span class="tag">CPU isolation / NUMA</span>
+        <span class="tag">DPDK / kernel bypass</span>
+        <span class="tag">perf &amp; cyclictest</span>
+        <span class="tag">eBPF</span>
+        <span class="tag">AWS / EC2 bare metal</span>
+        <span class="tag">networking</span>
+        <span class="tag">Bash</span>
+        <span class="tag">Python</span>
+        <span class="tag">C</span>
+        <span class="tag">troubleshooting</span>
       </div>
     </section>
 
     <!-- PROJECTS -->
-    <section id="projects">
-      <h2>Projects</h2>
+    <section id="projects" class="reveal">
+      <h2>projects</h2>
+
       <div class="card">
-        <h3>Latprobe</h3>
-        <div class="meta">Python &middot; Linux &middot; low-latency diagnostics &middot; MIT</div>
+        <h3>latprobe <span class="lock">[private]</span></h3>
+        <div class="meta">Python &middot; Linux &middot; low-latency diagnostics</div>
         <p>
-          Symptom-driven Linux latency and jitter diagnostics for low-latency
-          workloads. Instead of making you remember which tool shows what,
-          Latprobe runs the kernel-level checks you would type by hand
-          (cpupower, ethtool -S, /proc/net/softnet_stat, numastat, and more)
-          across 42 checks in 9 profiles, and interprets each result as
-          OK / WARN / FAIL with the raw evidence, why it matters, and a concrete
-          fix. Runs on any Linux instance; safe to run from cron except the one
-          disruptive cyclictest probe.
+          A symptom-driven latency &amp; jitter diagnostic tool. Instead of making
+          you remember that column 2 of /proc/net/softnet_stat counts softirq
+          drops, you tell it &ldquo;I care about network jitter&rdquo; and it runs
+          the right battery: 42 checks across 9 profiles (CPU governor, C-states,
+          SMT, NIC drops, IRQ affinity, NUMA, clocksource, hugepages), each scored
+          OK / WARN / FAIL with the raw evidence and a concrete fix. Safe to run
+          from cron; one disruptive cyclictest probe is opt-in.
         </p>
       </div>
+
       <a class="card" href="articles/hft-aws-bare-metal.html">
         <h3>HFT-style low-latency stack on AWS bare metal</h3>
-        <div class="meta">Linux &middot; DPDK &middot; AWS EC2 metal &middot; performance tuning</div>
+        <div class="meta">Linux &middot; DPDK &middot; ENA &middot; c6in.metal</div>
         <p>
-          A complete toolkit and experiment: kernel cmdline isolation, CPU/IRQ/NUMA
-          tuning, and DPDK kernel bypass via the ENA driver on a c6in.metal box.
-          Measured worst-case scheduling jitter dropping from 138&micro;s to 7&micro;s.
+          Can you do HFT-grade latency in the cloud without a Solarflare NIC? I
+          built the whole tuning playbook on a c6in.metal box (core isolation,
+          C-state control, SMT offlining, IRQ steering, hugepages) and proved out
+          DPDK kernel bypass via the ENA driver. Worst-case scheduling jitter
+          dropped from 138&micro;s to 7&micro;s. Full write-up &rarr;
         </p>
       </a>
     </section>
 
-    <!-- WRITING -->
-    <section id="writing">
-      <h2>Writing</h2>
-      <a class="card" href="articles/hft-aws-bare-metal.html">
-        <h3>Building an HFT-style low-latency stack on AWS bare metal</h3>
-        <div class="meta">2026 &middot; Performance &middot; AWS &middot; Linux</div>
-        <p>
-          Can you do HFT-grade low latency in the cloud without a Solarflare NIC?
-          I built the full Linux tuning playbook on a c6in.metal instance and
-          measured it. Worst-case scheduling jitter dropped from 138&micro;s to 7&micro;s.
-        </p>
-      </a>
-      <!-- Add more <a class="card"> blocks here as you write more. -->
+    <!-- RESULT -->
+    <section id="result" class="reveal">
+      <h2>the number I&rsquo;m proud of</h2>
+      <div class="metric">
+        <div class="cap">worst-case scheduling jitter on c6in.metal (cyclictest -p99, 840k samples)</div>
+        <div class="bar-row">
+          <span class="lbl">before</span>
+          <span class="bar-track"><span class="bar-fill before" data-w="100"></span></span>
+          <span class="val">138 &micro;s</span>
+        </div>
+        <div class="bar-row">
+          <span class="lbl">after</span>
+          <span class="bar-track"><span class="bar-fill after" data-w="5"></span></span>
+          <span class="val">7 &micro;s</span>
+        </div>
+        <div class="cap" style="margin:14px 0 0;">the average was 1&micro;s the whole time. the win is the tail, and the tail is the point.</div>
+      </div>
+    </section>
+
+    <!-- BELIEFS -->
+    <section id="beliefs" class="reveal">
+      <h2>things I believe about performance</h2>
+      <ul class="notes">
+        <li>The average is a comforting lie. Measure p99.9 and max, or you&rsquo;re measuring nothing.</li>
+        <li>Deep C-states are the number one source of microsecond jitter nobody looks at.</li>
+        <li>A perfectly pinned thread reading remote-node memory still pays the NUMA tax.</li>
+        <li>Don&rsquo;t tune from theory. Read the current value first, then change one thing, then re-measure.</li>
+        <li>If a result has no reproducible measurement behind it, it&rsquo;s an opinion, not a finding.</li>
+      </ul>
     </section>
 
     <!-- CONTACT -->
-    <section id="contact">
-      <h2>Contact</h2>
+    <section id="contact" class="reveal">
+      <h2>contact</h2>
+      <p class="muted">Ping me about low latency, Linux, or anything performance-shaped.</p>
+      <div class="cmd-copy" title="click to copy">
+        <code>mail bharath1232012@gmail.com</code>
+        <span class="copy">copy</span>
+      </div>
       <p class="muted">
-        Find me on
-        <a href="https://www.linkedin.com/in/bharathumb/">LinkedIn</a> &middot;
-        <a href="mailto:bharath1232012@gmail.com">bharath1232012@gmail.com</a>.
+        Also here:
+        <a href="https://www.linkedin.com/in/bharathumb/">LinkedIn</a>.
       </p>
     </section>
   </main>
 
   <footer class="site">
     <div class="wrap">
-      &copy; <span id="year"></span> Bharath M. &middot; Built as a static site.
+      &copy; <span id="year"></span> bharath &middot; static site, no frameworks, no webfonts, loads in one round trip.
     </div>
   </footer>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
