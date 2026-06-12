@@ -65,8 +65,14 @@
         <code>performance</code> CPU governor and a TSC clocksource</strong>, so
         steady-state latency is already excellent out of the box. The entire win
         was in the <strong>tail</strong>: collapsing the occasional 138&nbsp;&micro;s
-        spike down to a bounded 7&nbsp;&micro;s. In trading, the tail is the only
-        number that matters.
+        spike down to a bounded 7&nbsp;&micro;s.
+      </p>
+      <p>
+        (If &ldquo;tail&rdquo; is new: it&rsquo;s the slow end of the latency
+        distribution, the p99.9 and the max, the worst cases you hit
+        occasionally rather than the typical average. You never feel the
+        average; you feel the worst case. That&rsquo;s why, in trading, the tail
+        is the only number that matters.)
       </p>
 
       <h2>What actually moved the tail</h2>
