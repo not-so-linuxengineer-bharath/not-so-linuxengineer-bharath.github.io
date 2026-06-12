@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bharath M. — Cloud & Low-Latency Systems</title>
+  <meta name="description" content="Bharath M. — engineer working on AWS, Linux performance, and low-latency systems." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <span class="brand">Bharath M.</span>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#writing">Writing</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- HERO -->
+    <section class="hero" style="border-top:none;">
+      <div class="eyebrow">Cloud &middot; Linux &middot; Low Latency</div>
+      <h1>I make systems fast and predictable.</h1>
+      <p class="lead">
+        I work at the intersection of AWS, the Linux kernel, and performance
+        engineering &mdash; from troubleshooting production systems to squeezing
+        microseconds out of bare-metal hosts.
+      </p>
+      <div class="cta">
+        <a class="btn primary" href="articles/hft-aws-bare-metal.html">Read: HFT low latency on AWS &rarr;</a>
+        <a class="btn" href="#contact">Get in touch</a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>About me</h2>
+      <p>
+        I&rsquo;m Bharath, an engineer working in cloud infrastructure and
+        low-latency Linux systems. I spend most of my time deep in AWS and the
+        Linux kernel &mdash; CPU power management, NUMA, kernel bypass, the
+        network data path &mdash; the parts of the stack most people treat as a
+        black box.
+      </p>
+      <p>
+        What I enjoy most is turning &ldquo;it&rsquo;s slow sometimes&rdquo; into
+        a measured, reproducible answer. I like building things end to end:
+        forming a hypothesis, instrumenting the system, gathering the evidence,
+        and only then drawing a conclusion &mdash; then writing it up so someone
+        else can reproduce it.
+      </p>
+      <p class="muted">
+        Outside of the day job I tinker with bare-metal performance, DPDK, and
+        whatever rabbit hole looks interesting that week. When I learn something
+        worth sharing, it ends up here.
+      </p>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <h2>What I work with</h2>
+      <div class="tags">
+        <span class="tag">AWS</span>
+        <span class="tag">Linux performance</span>
+        <span class="tag">Low-latency tuning</span>
+        <span class="tag">DPDK</span>
+        <span class="tag">Networking</span>
+        <span class="tag">NUMA / CPU isolation</span>
+        <span class="tag">Bash / Python</span>
+        <span class="tag">EC2 / bare metal</span>
+        <span class="tag">Troubleshooting</span>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <h2>Projects</h2>
+      <a class="card" href="articles/hft-aws-bare-metal.html">
+        <h3>HFT-style low-latency stack on AWS bare metal</h3>
+        <div class="meta">Linux &middot; DPDK &middot; AWS EC2 metal &middot; performance tuning</div>
+        <p>
+          A complete toolkit + experiment: kernel cmdline isolation, CPU/IRQ/NUMA
+          tuning, and DPDK kernel bypass via the ENA driver on a c6in.metal box.
+          Measured worst-case scheduling jitter dropping from 138&micro;s to 7&micro;s.
+        </p>
+      </a>
+    </section>
+
+    <!-- WRITING -->
+    <section id="writing">
+      <h2>Writing</h2>
+      <a class="card" href="articles/hft-aws-bare-metal.html">
+        <h3>Building an HFT-style low-latency stack on AWS bare metal</h3>
+        <div class="meta">2026 &middot; Performance &middot; AWS &middot; Linux</div>
+        <p>
+          Can you do HFT-grade low latency in the cloud without a Solarflare NIC?
+          I built the full Linux tuning playbook on a c6in.metal instance and
+          measured it &mdash; worst-case scheduling jitter dropped from 138&micro;s to 7&micro;s.
+        </p>
+      </a>
+      <!-- Add more <a class="card"> blocks here as you write more. -->
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <p class="muted">
+        Find me on
+        <a href="https://github.com/Bharathumb">GitHub</a> &middot;
+        <a href="#">LinkedIn</a> &middot;
+        <a href="mailto:bharath1232012@gmail.com">bharath1232012@gmail.com</a>.
+        <!-- EDIT: drop your LinkedIn profile URL into the href="#" above. -->
+      </p>
+    </section>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      &copy; <span id="year"></span> Bharath M. &middot; Built as a static site.
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

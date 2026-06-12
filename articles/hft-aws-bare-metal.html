@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building an HFT-style low-latency stack on AWS bare metal — Bharath M.</title>
+  <meta name="description" content="Replicating the HFT Linux playbook on AWS bare metal: worst-case scheduling jitter from 138us to 7us, with real before/after numbers and DPDK kernel bypass via the ENA driver." />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <a class="brand" href="../index.html" style="color:var(--text)">Bharath M.</a>
+      <nav>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#writing">Writing</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="post">
+      <a class="backlink" href="../index.html">&larr; Back home</a>
+      <div class="post-meta">2026 &middot; Performance &middot; AWS &middot; Linux &middot; DPDK</div>
+      <h1>Building an HFT-style low-latency stack on AWS bare metal</h1>
+      <p class="muted"><em>All numbers below were measured on a real instance with open-source
+      tools and are reproducible. Sources are public AWS and DPDK docs.</em></p>
+
+      <h2>The claim I wanted to test</h2>
+      <p>
+        There&rsquo;s a persistent belief that you can&rsquo;t do
+        high-frequency-trading-grade low latency in the cloud, because you
+        can&rsquo;t run a Solarflare/Onload kernel-bypass NIC. I wanted to see
+        how far the standard HFT Linux playbook gets you on an AWS bare-metal
+        instance &mdash; and measure it honestly.
+      </p>
+
+      <h2>The box</h2>
+      <ul>
+        <li><strong>c6in.metal</strong> &mdash; 2&times; Intel Xeon 8375C (Ice Lake), 128 vCPU, 256 GiB, 200 Gbps.</li>
+        <li><strong>Amazon Linux 2023</strong>, kernel 6.1.</li>
+        <li>A network-optimized metal instance, because metal gives you real VFIO/PCI
+            passthrough (needed for DPDK) and the <em>n</em> line has the highest packet rate.</li>
+      </ul>
+
+      <h2>The headline result</h2>
+      <p>
+        Worst-case scheduling latency measured with <code>cyclictest</code>
+        (<code>-p 99</code>, 14 threads on the app cores, 60&nbsp;s, 840,000 samples),
+        before and after tuning:
+      </p>
+      <table class="results">
+        <thead>
+          <tr><th></th><th>Average</th><th>Worst-case max (the jitter tail)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Before</strong> (stock AL2023)</td><td>1&nbsp;&micro;s</td><td><strong>138&nbsp;&micro;s</strong></td></tr>
+          <tr><td><strong>After</strong> (full tuning)</td><td>1&nbsp;&micro;s</td><td><strong>7&nbsp;&micro;s</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        The average never moved &mdash; and that&rsquo;s the most interesting
+        finding. <strong>Amazon Linux 2023 on metal already ships with the
+        <code>performance</code> CPU governor and a TSC clocksource</strong>, so
+        steady-state latency is already excellent out of the box. The entire win
+        was in the <strong>tail</strong>: collapsing the occasional 138&nbsp;&micro;s
+        spike down to a bounded 7&nbsp;&micro;s. In trading, the tail is the only
+        number that matters.
+      </p>
+
+      <h2>What actually moved the tail</h2>
+      <p>Everything here is standard Linux, documented publicly, no proprietary tooling:</p>
+      <ol>
+        <li><strong>Core isolation</strong> via kernel cmdline: <code>isolcpus</code>,
+          <code>nohz_full</code>, <code>rcu_nocbs</code> on the application cores &mdash;
+          removing them from the scheduler, the timer tick, and RCU callback processing.</li>
+        <li><strong>C-state control</strong>: <code>idle=poll</code> and capping the max
+          C-state at 1. Deep C-states are the single biggest source of microsecond wake-up jitter.</li>
+        <li><strong>SMT isolation</strong>: I took the Hyper-Thread siblings of the app cores
+          offline so a sibling can&rsquo;t contend for shared execution units (done per-core,
+          so housekeeping cores keep their threads).</li>
+        <li><strong>IRQ steering</strong>: moved every interrupt onto a pair of housekeeping
+          cores and stopped irqbalance, so nothing fires on the app cores.</li>
+        <li><strong>1&nbsp;GiB hugepages</strong> to cut TLB pressure.</li>
+        <li><strong><code>mitigations=off</code></strong> &mdash; a real latency win, but a
+          security trade-off. Only on an isolated, single-tenant box.</li>
+      </ol>
+
+      <h2>Kernel bypass without Solarflare</h2>
+      <p>
+        This is the part people don&rsquo;t expect. AWS&rsquo;s NIC &mdash; the
+        <strong>Elastic Network Adapter (ENA)</strong> &mdash; has a native
+        <strong>DPDK Poll Mode Driver</strong>, and it supports a
+        <strong>Low Latency Queue (LLQ)</strong> mode. On a metal instance you get
+        real <code>vfio-pci</code> passthrough, so you can do genuine userspace kernel bypass.
+      </p>
+      <blockquote>
+        &ldquo;The ENA PMD is a DPDK poll-mode driver for the Amazon Elastic Network
+        Adapter (ENA) family&hellip; The PMD attempts to enable the LLQ (Low Latency
+        Queue) whenever it&rsquo;s possible.&rdquo;
+        <cite>&mdash; <a href="https://doc.dpdk.org/guides/nics/ena.html">DPDK ENA Poll Mode Driver docs</a></cite>
+      </blockquote>
+      <p>
+        I attached a second ENI, bound it to <code>vfio-pci</code>, and ran a
+        busy-poll, run-to-completion loop entirely in userspace on an isolated core.
+        The ENA Poll Mode Driver came up, mapped the device, and the loop polled the
+        NIC with zero syscalls on the hot path. That&rsquo;s the AWS equivalent of
+        Onload &mdash; it&rsquo;s just called ENA&nbsp;+&nbsp;DPDK.
+      </p>
+      <p>
+        And for timestamps: the <strong>Amazon Time Sync Service</strong> now exposes a
+        PTP Hardware Clock with nanosecond-precision hardware packet timestamps, so you
+        don&rsquo;t need to run your own grandmaster clock.
+      </p>
+      <blockquote>
+        &ldquo;The Amazon Time Sync Service now supports nanosecond-precision hardware
+        packet timestamping on supported Amazon EC2 instances.&rdquo;
+        <cite>&mdash; <a href="https://aws.amazon.com/about-aws/whats-new/2025/06/amazon-time-sync-nanosecond-hardware-packet-timestamps/">AWS What&rsquo;s New, June 2025</a></cite>
+      </blockquote>
+
+      <h2>What you give up vs. a colo cage (being honest)</h2>
+      <ul>
+        <li><strong>No BIOS access.</strong> Nitro abstracts the firmware, so you can&rsquo;t
+          disable C-states or prefetchers in BIOS &mdash; everything is kernel cmdline and <code>/sys</code>.</li>
+        <li><strong>No Solarflare/Onload.</strong> You use the ENA DPDK driver instead. It
+          genuinely is kernel bypass, but it&rsquo;s a different ecosystem.</li>
+        <li><strong>Nitro-managed turbo/P-states</strong> &mdash; less granular than raw hardware.</li>
+      </ul>
+
+      <h2>Honest scope of the numbers</h2>
+      <p>
+        These are <strong>single-host scheduling-latency</strong> numbers
+        (<code>cyclictest</code>), which isolate the OS jitter &mdash; exactly the thing
+        tuning fixes. They are <strong>not</strong> end-to-end wire latency. Measuring true
+        tick-to-trade latency needs a second instance as a packet generator in a cluster
+        placement group. That&rsquo;s the follow-up.
+      </p>
+      <p>
+        Everything was measured with <code>cyclictest</code>, <code>perf</code>, and
+        <code>ethtool</code> &mdash; open tools, so you can reproduce every number.
+      </p>
+
+      <h2>Takeaway</h2>
+      <p>
+        The cloud isn&rsquo;t a colo cage, but the gap is smaller than the folklore
+        suggests. On AWS bare metal, standard Linux tuning took worst-case jitter from
+        138&nbsp;&micro;s to 7&nbsp;&micro;s, and the ENA DPDK driver gives you real kernel
+        bypass. For a large class of latency-sensitive workloads, that&rsquo;s more than
+        enough &mdash; and you skip the data-center contract.
+      </p>
+
+      <a class="backlink" href="../index.html">&larr; Back home</a>
+    </article>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      &copy; <span id="year"></span> Bharath M.
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
