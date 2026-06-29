@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bharath M. | Linux Systems &amp; Low-Latency Engineer</title>
-  <meta name="description" content="Bharath M. — Linux Systems Engineer with 5+ years across bare-metal data centres and AWS. Low-latency tuning, kernel performance, DPDK, and infrastructure automation." />
+  <meta name="description" content="Bharath M. — Linux systems engineer in Bengaluru. Server provisioning, automation with Python/Ansible/Puppet, and performance debugging across bare metal and AWS." />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -24,18 +24,17 @@
   <main class="wrap">
     <!-- HERO -->
     <section class="hero" style="border-top:none;">
-      <div class="eyebrow">Linux Systems Engineer</div>
+      <div class="eyebrow">Linux Systems Engineer · Bengaluru</div>
       <h1>Bharath M.</h1>
-      <div class="tagline">I chase tail latency on Linux.</div>
+      <div class="tagline">Linux performance, automation, and the infrastructure underneath.</div>
       <p class="lead">
-        5+ years keeping Linux fleets fast and reliable, from bare-metal data
-        centres to AWS bare-metal EC2 and Outposts. I work where the kernel meets
-        the hardware, and turn &ldquo;it&rsquo;s slow sometimes&rdquo; into a
-        number, a cause, and a fix you can reproduce.
+        I&rsquo;ve spent about five years running Linux servers, from physical
+        machines racked in data centres to bare-metal EC2 and Outposts on AWS.
+        Most of my work sits below the application: provisioning, automation, and
+        working out why something is slow when it shouldn&rsquo;t be.
       </p>
-      <p class="muted" style="margin-top:8px;">Bengaluru, India · open to relocation</p>
       <div class="cta">
-        <a class="btn primary" href="articles/hft-aws-bare-metal.html">Read the case study</a>
+        <a class="btn primary" href="articles/hft-aws-bare-metal.html">Read a project write-up</a>
         <a class="btn" href="#contact">Get in touch</a>
       </div>
     </section>
@@ -44,20 +43,18 @@
     <section id="about" class="reveal">
       <h2>About</h2>
       <p>
-        I&rsquo;m Bharath, a Linux Systems Engineer with 5+ years running critical
-        infrastructure across bare-metal data centres, VMware, and AWS. I
-        currently operate and optimise Linux production fleets at AWS, across
-        cloud, Kubernetes, bare-metal EC2, and Outposts, with a background in
-        end-to-end server provisioning (BMC/IPMI/iDRAC/iLO, PXE/iPXE) and
-        large-scale config management with Puppet and Ansible.
+        I&rsquo;m Bharath, a Linux systems engineer based in Bengaluru. I started
+        out at TCS provisioning and maintaining physical server fleets, the whole
+        rack-to-OS process with BMC and PXE, and I&rsquo;m now at AWS working on
+        Linux across cloud, Kubernetes, bare-metal EC2, and Outposts.
       </p>
       <p>
-        What pulls me in is the part of the stack below the application: CPU
-        isolation, C-states, NUMA placement, interrupt handling, and the network
-        path. The interesting problems down here rarely show up as errors, they
-        show up as a graph that&rsquo;s fine on average and, occasionally and
-        expensively, isn&rsquo;t. My approach is measure first, theorise second,
-        then write it up so the next person doesn&rsquo;t have to rediscover it.
+        A lot of my day is automation: Puppet and Ansible to keep fleets
+        consistent, and Python to take repetitive jobs off people&rsquo;s hands.
+        The part I enjoy most is the debugging, especially latency problems, the
+        ones that don&rsquo;t throw an error and only bite once in a while. I try
+        to measure things properly and show that a fix actually worked, rather
+        than guess and hope.
       </p>
     </section>
 
@@ -80,7 +77,7 @@
       </div>
     </section>
 
-    <!-- PROJECTS (direct bullets) -->
+    <!-- PROJECTS -->
     <section id="projects" class="reveal">
       <h2>Projects</h2>
 
@@ -90,10 +87,10 @@
           <span class="meta">Python · Linux · diagnostics</span>
         </div>
         <ul class="bullets">
-          <li>Most Linux performance tools are tool-driven, you have to already know which knob shows what. Latprobe flips that: you say what you care about (&ldquo;network jitter&rdquo;) and it runs the right battery of checks.</li>
-          <li>42 checks across 9 profiles (CPU governor, C-states, SMT, NIC drops, IRQ affinity, NUMA, clocksource, hugepages), each scored OK / WARN / FAIL with raw evidence and a concrete fix.</li>
-          <li>Cron-safe by default, with one opt-in disruptive cyclictest probe; RPM-packaged for RHEL, Amazon Linux, and Ubuntu with JSON alert integration.</li>
-          <li>Turns &ldquo;the box feels jittery&rdquo; into a <span class="hl">ranked list of causes and fixes</span> in a single command.</li>
+          <li>Most Linux performance tools make you already know which command shows what. Latprobe works the other way around: you tell it what you&rsquo;re worried about (say, network jitter) and it runs the checks that matter for it.</li>
+          <li>42 checks across 9 areas (CPU governor, C-states, SMT, NIC drops, IRQ affinity, NUMA, clocksource, hugepages). Each one comes back OK, WARN, or FAIL with the raw output and a suggested fix.</li>
+          <li>Safe to run from cron, with one heavier cyclictest check kept opt-in. Packaged as an RPM for RHEL, Amazon Linux, and Ubuntu.</li>
+          <li>The point is to go from &ldquo;this box feels slow&rdquo; to <span class="hl">a short list of likely causes</span> without poking at ten different files by hand.</li>
         </ul>
       </div>
 
@@ -103,10 +100,10 @@
           <span class="meta">Linux · DPDK · ENA · c6in.metal</span>
         </div>
         <ul class="bullets">
-          <li>Tested the common belief that you can&rsquo;t get HFT-grade low latency in the cloud without a Solarflare kernel-bypass NIC.</li>
-          <li>On c6in.metal: core isolation (isolcpus / nohz_full / rcu_nocbs), idle=poll with C-states capped, SMT siblings offlined, IRQs steered to housekeeping cores, and 1 GiB hugepages.</li>
-          <li>Proved out DPDK kernel bypass through the ENA Poll Mode Driver, busy-poll run-to-completion on an isolated core.</li>
-          <li>Worst-case scheduling jitter dropped from <span class="hl">138 µs to 7 µs</span> (~20× tighter tail), measured with open tools and fully documented.</li>
+          <li>People say you can&rsquo;t get trading-grade low latency in the cloud without a Solarflare card, so I wanted to see how close you could get on plain AWS bare metal.</li>
+          <li>On a c6in.metal box: core isolation (isolcpus / nohz_full / rcu_nocbs), idle=poll with C-states capped, SMT siblings taken offline, IRQs moved off the app cores, and 1 GiB hugepages.</li>
+          <li>Got DPDK kernel bypass working through the ENA driver, with a busy-poll loop running on an isolated core.</li>
+          <li>Worst-case scheduling jitter went from <span class="hl">138 µs down to 7 µs</span>, measured with open tools so anyone can repeat it.</li>
         </ul>
         <a class="more" href="articles/hft-aws-bare-metal.html">Read the full write-up →</a>
       </div>
@@ -117,36 +114,36 @@
           <span class="meta">Python · networking · diagnostics</span>
         </div>
         <ul class="bullets">
-          <li>Zero-dependency Python tool that measures UDP round-trip latency and reports the percentiles that matter, p50 / p99 / p99.9 / max, not the average. JSON output and a p99 threshold exit code for automation and alerting.</li>
-          <li>Closed-loop ping-pong design, with busy-poll and CPU-pinning options and packet-loss tracking.</li>
-          <li>Tested on two AWS c6in.metal boxes in a cluster placement group: real same-rack wire RTT of <span class="hl">p50 35.9 µs, p99 38.7 µs</span>, 0% loss across 300,000 packets (busy-poll + CPU pinning).</li>
-          <li>Finding: busy-poll only pays off when the thread is pinned, unpinned it was slightly worse than a plain blocking socket.</li>
+          <li>A small Python tool (no dependencies) that measures UDP round-trip time and reports p50, p99, p99.9 and max instead of just the average. It can output JSON and fail a threshold check, so it drops into monitoring.</li>
+          <li>Ping-pong style, one packet in flight at a time, with busy-poll and CPU-pinning options and packet-loss tracking.</li>
+          <li>I ran it between two c6in.metal boxes in the same placement group: <span class="hl">p50 35.9 µs, p99 38.7 µs</span>, no packet loss over 300,000 packets.</li>
+          <li>One thing that surprised me: busy-poll on its own was slightly worse than a normal blocking socket. It only helped once I pinned the thread to a core.</li>
         </ul>
       </div>
     </section>
 
     <!-- RESULT -->
     <section id="result" class="reveal">
-      <h2>The number I&rsquo;m proud of</h2>
+      <h2>Before and after</h2>
       <div class="result-callout">
         <div class="big"><span class="from">138 µs</span><span class="arrow">→</span><span class="to">7 µs</span></div>
         <div class="desc">
-          Worst-case scheduling jitter on c6in.metal (cyclictest -p99, 840k samples).
-          The average was 1 µs the whole time, the win is the tail, and in low-latency
-          work the tail is the point.
+          Worst-case scheduling jitter on a c6in.metal box (cyclictest -p99, 840k
+          samples). The average stayed at 1 µs the whole time. All the improvement
+          was in the worst cases, which is the part that actually matters for this
+          kind of work.
         </div>
       </div>
     </section>
 
-    <!-- BELIEFS -->
-    <section id="beliefs" class="reveal">
-      <h2>Things I believe about performance</h2>
+    <!-- HOW I WORK -->
+    <section id="approach" class="reveal">
+      <h2>How I approach this work</h2>
       <ul class="notes">
-        <li>The average is a comforting lie. Measure p99.9 and max, or you&rsquo;re measuring nothing.</li>
-        <li>Deep C-states are the number-one source of microsecond jitter nobody looks at.</li>
-        <li>A perfectly pinned thread reading remote-node memory still pays the NUMA tax.</li>
-        <li>Don&rsquo;t tune from theory. Read the current value first, change one thing, then re-measure.</li>
-        <li>If a result has no reproducible measurement behind it, it&rsquo;s an opinion, not a finding.</li>
+        <li>I look at p99 and the max, not just the average. The slow one-in-ten-thousand is usually what people are actually complaining about.</li>
+        <li>A lot of &ldquo;random&rdquo; slowness comes down to CPU power states or processes ending up on the wrong cores, so I check those early.</li>
+        <li>I read the current setting before changing it. Often it&rsquo;s already fine and the real problem is somewhere else.</li>
+        <li>If I can&rsquo;t show a before-and-after measurement, I don&rsquo;t really trust the fix.</li>
       </ul>
     </section>
 
@@ -169,9 +166,10 @@
           <span class="meta">2026 · Performance · AWS</span>
         </div>
         <p class="muted" style="margin-top:8px;">
-          Can you do HFT-grade low latency in the cloud without a Solarflare NIC?
-          The full Linux tuning playbook on c6in.metal, with real before/after
-          numbers and DPDK kernel bypass through the ENA driver.
+          How close can you get to trading-grade latency on plain AWS bare metal?
+          The full set of Linux tuning steps on a c6in.metal box, the before and
+          after numbers, and getting DPDK kernel bypass working through the ENA
+          driver.
         </p>
         <a class="more" href="articles/hft-aws-bare-metal.html">Read →</a>
       </div>
@@ -180,7 +178,7 @@
     <!-- CONTACT -->
     <section id="contact" class="reveal">
       <h2>Contact</h2>
-      <p class="muted">Reach out about low latency, Linux, or anything performance-shaped. Bengaluru, India · open to relocation.</p>
+      <p class="muted">Happy to talk about Linux, performance, or infrastructure work. Email is the easiest way to reach me.</p>
       <div class="cmd-copy" title="click to copy">
         <code>bharath1232012@gmail.com</code>
         <span class="copy">copy</span>
