@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bharath M. | Linux Systems &amp; Low-Latency Engineer</title>
-  <meta name="description" content="Bharath M., Linux systems engineer in Bengaluru. Server provisioning, automation with Python/Ansible/Puppet, and performance debugging across bare metal and AWS." />
+  <meta name="description" content="Bharath M., Linux systems engineer focused on Linux internals and low-latency, HFT-style tuning: scheduling, NUMA, interrupts, kernel-bypass networking, and the tools to measure them." />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -24,14 +24,15 @@
   <main class="wrap">
     <!-- HERO -->
     <section class="hero" style="border-top:none;">
-      <div class="eyebrow">Linux Systems Engineer · Bengaluru</div>
+      <div class="eyebrow">Linux Systems Engineer · Low-Latency</div>
       <h1>Bharath M.</h1>
-      <div class="tagline">Linux performance, automation, and the infrastructure underneath.</div>
+      <div class="tagline">I work on Linux internals and low-latency systems.</div>
       <p class="lead">
-        I&rsquo;ve spent about five years running Linux servers, from physical
-        machines racked in data centres to bare-metal EC2 and Outposts on AWS.
-        Most of my work sits below the application: provisioning, automation, and
-        working out why something is slow when it shouldn&rsquo;t be.
+        About five years working on Linux, from bare-metal data centres to AWS.
+        What I&rsquo;m really into is the internals that decide how fast and how
+        predictable a box is: the scheduler, CPU power states, NUMA, interrupts,
+        and the network path, and the kind of low-latency tuning that trading
+        systems care about.
       </p>
       <div class="cta">
         <a class="btn primary" href="articles/hft-aws-bare-metal.html">Read a project write-up</a>
@@ -43,18 +44,18 @@
     <section id="about" class="reveal">
       <h2>About</h2>
       <p>
-        I&rsquo;m Bharath, a Linux systems engineer based in Bengaluru. I started
-        out at TCS provisioning and maintaining physical server fleets, the whole
-        rack-to-OS process with BMC and PXE, and I&rsquo;m now at AWS working on
-        Linux across cloud, Kubernetes, bare-metal EC2, and Outposts.
+        I&rsquo;m Bharath, a Linux systems engineer. What I care about most is
+        what happens below the application, the kernel internals that decide how
+        fast and how predictable a system is: the scheduler, CPU power states
+        and C-states, NUMA, interrupt handling, and the network path.
       </p>
       <p>
-        A lot of my day is automation: Puppet and Ansible to keep fleets
-        consistent, and Python to take repetitive jobs off people&rsquo;s hands.
-        The part I enjoy most is the debugging, especially latency problems, the
-        ones that don&rsquo;t throw an error and only bite once in a while. I try
-        to measure things properly and show that a fix actually worked, rather
-        than guess and hope.
+        I&rsquo;ve spent about five years on Linux, from provisioning and running
+        physical server fleets to working across cloud, Kubernetes, bare-metal
+        EC2, and Outposts. A lot of my own time goes into low-latency and
+        HFT-style tuning: isolating cores, cutting jitter, kernel-bypass
+        networking, and writing small tools to measure all of it properly. The
+        projects below are most of that work.
       </p>
     </section>
 
@@ -62,11 +63,12 @@
     <section id="skills" class="reveal">
       <h2>Skills</h2>
       <div class="tags">
-        <span class="tag">Linux performance</span>
+        <span class="tag">Linux internals (scheduler / IRQ / memory)</span>
         <span class="tag">Low-latency tuning</span>
         <span class="tag">CPU isolation / NUMA</span>
         <span class="tag">DPDK / kernel bypass</span>
         <span class="tag">perf &amp; cyclictest</span>
+        <span class="tag">Linux performance</span>
         <span class="tag">BMC / PXE provisioning</span>
         <span class="tag">Puppet / Ansible</span>
         <span class="tag">AWS / EC2 bare metal / Outposts</span>
