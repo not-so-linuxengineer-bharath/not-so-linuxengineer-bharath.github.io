@@ -135,6 +135,18 @@
           <li>Pairs with the UDP latency tool above: capture its traffic and confirm there were no drops or retransmits while measuring.</li>
         </ul>
       </div>
+
+      <div class="project">
+        <div class="head">
+          <h3>clockcheck: Linux time-sync health check</h3>
+          <span class="meta">Python · time sync · diagnostics</span>
+        </div>
+        <ul class="bullets">
+          <li>A no-dependency Python check for whether a box's clock is actually synced and how far off it is. Reports each finding as OK / WARN / FAIL with an exit code, so it drops straight into cron or a monitoring probe.</li>
+          <li>Reads chrony (offset, leap status, which source is selected), looks for a PTP hardware clock including the Amazon Time Sync PHC, checks the clocksource, and falls back to systemd-timesyncd if chrony isn&rsquo;t there.</li>
+          <li>On a c6in.metal box it showed chrony synced to the Amazon Time Sync Service at a <span class="hl">0.3 µs</span> offset. It also correctly reported that the PTP hardware clock wasn&rsquo;t exposed by default, rather than assuming it was there.</li>
+        </ul>
+      </div>
     </section>
 
     <!-- RESULT -->
