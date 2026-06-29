@@ -110,6 +110,19 @@
         </ul>
         <a class="more" href="articles/hft-aws-bare-metal.html">Read the full write-up →</a>
       </div>
+
+      <div class="project">
+        <div class="head">
+          <h3>udplat — UDP latency measurement tool</h3>
+          <span class="meta">Python · networking · diagnostics</span>
+        </div>
+        <ul class="bullets">
+          <li>Zero-dependency Python tool that measures UDP round-trip latency and reports the percentiles that matter, p50 / p99 / p99.9 / max, not the average. JSON output and a p99 threshold exit code for automation and alerting.</li>
+          <li>Closed-loop ping-pong design, with busy-poll and CPU-pinning options and packet-loss tracking.</li>
+          <li>Tested on two AWS c6in.metal boxes in a cluster placement group: real same-rack wire RTT of <span class="hl">p50 35.9 µs, p99 38.7 µs</span>, 0% loss across 300,000 packets (busy-poll + CPU pinning).</li>
+          <li>Finding: busy-poll only pays off when the thread is pinned, unpinned it was slightly worse than a plain blocking socket.</li>
+        </ul>
+      </div>
     </section>
 
     <!-- RESULT -->
