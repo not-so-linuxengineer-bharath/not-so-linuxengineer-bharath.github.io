@@ -122,6 +122,19 @@
           <li>One thing that surprised me: busy-poll on its own was slightly worse than a normal blocking socket. It only helped once I pinned the thread to a core.</li>
         </ul>
       </div>
+
+      <div class="project">
+        <div class="head">
+          <h3>pcapstat: capture and analyse network traffic</h3>
+          <span class="meta">Python · networking · diagnostics</span>
+        </div>
+        <ul class="bullets">
+          <li>A no-dependency Python tool for quick network triage on a Linux box without pulling in Wireshark. It captures packets to a .pcap and parses one back into stats.</li>
+          <li>Parses the pcap format and Ethernet / VLAN / IPv4 / IPv6 / TCP / UDP / ICMP headers by hand, then reports totals, packets-per-second, protocol mix, top talkers, top ports, TCP flags, and an estimate of retransmissions.</li>
+          <li>Capture uses an AF_PACKET raw socket on Linux; off Linux it points you at tcpdump and still analyses the file.</li>
+          <li>Pairs with the UDP latency tool above: capture its traffic and confirm there were no drops or retransmits while measuring.</li>
+        </ul>
+      </div>
     </section>
 
     <!-- RESULT -->
